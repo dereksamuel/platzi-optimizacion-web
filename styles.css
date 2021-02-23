@@ -60,10 +60,6 @@ header {
   margin-left: 30px;
   width: 200px;
   height: 61px;
-  background-image: url(/assets/logo-platzi-video.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
 }
 
 .menu {
@@ -181,7 +177,7 @@ footer a:hover {
   position: relative;
 }
 
-.carousel > div {
+.carrousel__spacing {
   font-size: 0;
   white-space: nowrap;
   margin: 70px 0px;
@@ -202,7 +198,7 @@ footer a:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 /* Change opacity to all items but current */
-.carousel > div:hover .carousel-item:not(:hover) {
+.carrousel__spacing:hover .carousel-item:not(:hover) {
   opacity: 0.3;
 }
 /* Scale up current */
@@ -211,19 +207,17 @@ footer a:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 1);
 }
 /* Move subsecuent item */
-.carousel-item:hover + .carousel-item {
-  margin-left: 100px;
-}
 
-.carousel-item > img {
+.carousel-item__img {
   width: 200px;
   height: 250px;
   object-fit: cover;
   overflow: hidden;
+  transition: 1s all ease-in-out;
   border-radius: 20px;
 }
 
-.carousel-item > div {
+.carousel-item__div {
   overflow: hidden;
   border-radius: 20px;
   align-items: flex-start;
@@ -245,28 +239,63 @@ footer a:hover {
   right: 0;
   top: 0;
 }
-.carousel-item:hover > div {
+.carousel-item:hover > .carousel-item__div {
   opacity: 1;
 }
 
-.carousel-item > div > div a > img {
+.carrousel-item-div__link-img {
   width: 20px;
 }
 
 /* Title */
-.carousel-item > div > p:nth-of-type(1) {
+.carousel-item__title {
   color: white;
   margin: 5px 0px 0px 0px;
 }
 /* Subtitle */
-.carousel-item > div > p:nth-of-type(2) {
+.carousel-item__subtitle {
   color: white;
   font-size: 7px;
   margin: 3px 0px;
 }
 /* Date */
-.carousel-item > div > p:nth-of-type(3) {
+.carousel-item__description {
   color: white;
   font-size: 6px;
   margin: 0px;
+}
+
+.carousel-item:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 1);
+  opacity: 0.4;
+  transition: 450ms opacity;
+}
+
+.carousel-item:hover:before {
+  opacity: 1;
+}
+
+.carousel-item:hover + .carousel-item {
+  transform: translateX(100px);
+}
+
+.carousel-item {
+  will-change: transform;
+  border-radius: 20px;
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 250px;
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 450ms all;
+  transform-origin: center left;
 }

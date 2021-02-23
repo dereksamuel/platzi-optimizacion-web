@@ -1,6 +1,7 @@
 import h from 'hyperscript'
 import { fetchPopular, fetchHighestRated, fetchTrending } from './api'
 import CarouselItem from './CarouselItem'
+import { modalListener } from './modal/index'
 
 const SectionTitle = title => h('h3.carousel-title', title)
 
@@ -8,13 +9,13 @@ const Carousel = ({ itemsList = [] }) =>
   h(
     'section.carousel',
     h(
-      'div',
+      'div.carrousel__spacing',
       itemsList.map(
         ({
           attributes: { titles, posterImage, slug, youtubeVideoId, startDate },
         }) =>
           CarouselItem({
-            imageUrl: posterImage.large,
+            imageUrl: posterImage.medium,
             title: titles.en,
             subtitle: titles.ja_jp,
             slug,
@@ -58,4 +59,29 @@ const Carousel = ({ itemsList = [] }) =>
         itemsList: popular,
       })
     )
+  const imgs = document.querySelectorAll('img.carousel-item__img')
+
+  const observer = new IntersectionObserver(entries => {
+    // if (img.hasAttribute("src")) return;
+    for (const { target, isIntersecting } of entries) {
+      if (isIntersecting) {
+        target.setAttribute('src', target.dataset.src)
+        target.setAttribute('style', 'opacity: 1;')
+      } else {
+        target.removeAttribute('src')
+        target.setAttribute('style', 'opacity: 0;')
+      }
+    }
+  })
+
+  imgs.forEach(img => {
+    observer.observe(img)
+  })
+
+  const body = document.body
+  body.addEventListener('click', event => {
+    const tagName = event.target.tagName
+    if (!!!['IMG', 'A'].includes(tagName)) return
+    modalListener(event)
+  })
 })(document, window)
